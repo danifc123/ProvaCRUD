@@ -38,8 +38,8 @@ public class tCad {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-                txtCaminho.enable(false);
-                btnImport.enable(false);
+                txtCaminho.setEnabled(false);
+                btnImport.setEnabled(false);
             }
         });
         salvarButton.addActionListener(new ActionListener() {
@@ -108,6 +108,17 @@ public class tCad {
 
                 Cadastro.setVisible(true);
                 Listagem.setVisible(false);
+
+                int confirmacao = JOptionPane.showConfirmDialog(null, "Deseja salvar as alterações?", "Salvar Alterações", JOptionPane.YES_NO_OPTION);
+                if (confirmacao == JOptionPane.YES_OPTION) {
+                    DefaultTableModel model = (DefaultTableModel) table1.getModel();
+                    model.removeRow(row);
+                    try {
+                        salvarTabelaEmArquivo(txtCaminho.getText(), model);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         });
 
